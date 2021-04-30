@@ -87,7 +87,7 @@ class SecurityPlayer extends FunctionalPlayer{
 	 * @return bool
 	 */
 	public function isBanned(): bool{
-		return is_null($this->ban);
+		return !is_null($this->ban);
 	}
 
 	/**
