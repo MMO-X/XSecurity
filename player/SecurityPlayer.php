@@ -1,4 +1,10 @@
 <?php
+/*
+ * Copyright (c) 2021 Jan Sohn.
+ * All rights reserved.
+ * I don't want anyone to use my source code without permission.
+ */
+
 declare(strict_types=1);
 namespace xxAROX\XSecurity\player;
 use xxAROX\Core\player\classes\FunctionalPlayer;
