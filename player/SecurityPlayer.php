@@ -7,9 +7,11 @@
 
 declare(strict_types=1);
 namespace xxAROX\XSecurity\player;
+use pocketmine\utils\TextFormat;
 use xxAROX\Core\player\classes\FunctionalPlayer;
 use xxAROX\XSecurity\generic\Ban;
 use xxAROX\XSecurity\generic\Mute;
+use xxAROX\XSecurity\utils\Utils;
 
 
 /**
@@ -26,6 +28,8 @@ class SecurityPlayer extends FunctionalPlayer{
 
 	protected int $banCount = 0;
 	protected ?Ban $ban = null;
+
+	protected ?string $lastMessage = null;
 
 	/**
 	 * Function loadData
@@ -130,5 +134,26 @@ class SecurityPlayer extends FunctionalPlayer{
 	 */
 	public function isMuted(): bool{
 		return is_null($this->mute);
+	}
+
+	/**
+	 * Function chat
+	 * @param string $message
+	 * @return bool
+	 */
+	public function chat(string $message): bool{
+		if (!$this->hasPermission("mmox.bypass.chatColors")) {
+			$message = TextFormat::clean($message);
+		}
+		if (!$this->hasPermission("mmox.bypass.caps") && Utils::checkForCaps($message)) {
+			$this->sendMessage("message.messageWereNotSent.reason", ["%reason.chatMessage.caps"]);
+			return false;
+		}
+		if (!$this->hasPermission("mmox.bypass.spamChars") && Utils::checkIfIsSame($this->lastMessage, $message)) {
+			$this->sendMessage("message.messageWereNotSent", ["%reason.chatMessage.sameMessage"]);
+			return false;
+		}
+		$this->lastMessage = $message;
+		return parent::chat($message);
 	}
 }
