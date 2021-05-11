@@ -129,6 +129,6 @@ class SecurityPlayer extends FunctionalPlayer{
 	 * @return bool
 	 */
 	public function isMuted(): bool{
-		return is_null($this->mute);
+		return !is_null($this->mute);
 	}
 }
