@@ -38,7 +38,7 @@ class OfflineSecurityPlayer extends OfflineFunctionalPlayer{
 			$this->mute = Mute::fromArray($data["mute"]["object"] ?? null);
 		}
 		if (isset($data["ban"])) {
-			$this->muteCount = $data["ban"]["count"] ?? 0;
+			$this->banCount = $data["ban"]["count"] ?? 0;
 			$this->ban = Ban::fromArray($data["ban"]["object"] ?? null);
 		}
 	}
